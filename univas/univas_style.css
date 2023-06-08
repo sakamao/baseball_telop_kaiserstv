@@ -1,0 +1,240 @@
+/* ------ ã¡ã‚‰ã¤ãé˜²æ­¢ ------ */
+[v-cloak] {
+  display: none;
+}
+
+html, body {
+	background: transparent;
+}
+
+body {
+	font-family: sans-serif;
+	color: #F8F8F8;
+	font-size: 16px;
+	padding: 30px;
+}
+
+input[type*="number"],
+input[type*="text"] {
+  font-weight: bold;
+	padding: 0 .2em;
+}
+
+.material-icons {
+  vertical-align: -2px;
+}
+
+
+/* =====================================
+display-area
+===================================== */
+
+.display-area {
+  display: table;
+  padding: 16px;
+  border: 1px solid #0E2041;
+  background: -moz-linear-gradient(-45deg, rgba(14,32,65,0.86) 0%, rgba(3,6,13,0.9) 100%);
+  background: -webkit-linear-gradient(-45deg, rgba(14,32,65,0.86) 0%,rgba(3,6,13,0.9) 100%);
+  background: linear-gradient(135deg, rgba(14,32,65,0.86) 0%,rgba(0, 0, 0, 0.9) 100%);
+  width: 680px;
+  margin-bottom: 40px;
+}
+
+.display-area__heading {
+  display: flex;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.display-area__main-title {
+  margin-right: 0.5em;
+}
+
+.display-area__body {
+  display: flex;
+}
+
+.display-area__left {
+  flex-basis: 112px;
+  min-width: 112px;
+  margin-right: 16px;
+}
+
+.display-area__right {
+  flex-basis: 94px;
+  min-width: 94px;
+  margin-left: 16px;
+}
+
+.display-area__main {
+  width: 100%;
+}
+
+.display-area__head,
+.display-area__team {
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  font-weight: bold;
+  padding: 8px;
+}
+
+.display-area__head {
+  justify-content: flex-end;
+  background-color: rgba(0, 0, 0, 0.3);
+  box-shadow: inset 1px 1px 2px 1px rgba(0, 0, 0, .5);
+}
+
+.display-area__head .item {
+  font-size: 20px;
+  min-width: 80px;
+  margin-left: 8px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.display-area__team {
+  background: -moz-linear-gradient(top, rgba(14,32,65,1) 0%, rgba(3,6,13,1) 100%);
+  background: -webkit-linear-gradient(top, rgba(14,32,65,1) 0%,rgba(3,6,13,1) 100%);
+  background: linear-gradient(to bottom, rgba(14,32,65,1) 0%,rgba(3,6,13,1) 100%);
+  border: 1px solid #0E2041;
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, .5);
+  font-size: 24px;
+  margin-top: 2px;
+}
+
+.display-area__team .team {
+  width: 100%;
+  white-space: nowrap;
+}
+
+.display-area__team .game,
+.display-area__team .set,
+.display-area__team .score,
+.display-area__team .point {
+  min-width: 80px;
+  min-height: 36px;
+  margin-left: 8px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.display-area__team .attack {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 48px;
+  margin-left: 8px;
+}
+
+.display-area__team .attack.is-active span {
+  display: inline-block;
+  border-radius: 50%;
+  box-shadow: inset 0px 0px 4px rgba(255, 255, 255, .6);
+  background-color: #ce2b2b;
+  width: 22px;
+  height: 22px;
+}
+
+.display-area__team .point,
+.display-area__team .score,
+.display-area__team .game,
+.display-area__team .set {
+  border-left: 1px solid rgba(255, 255, 255, .2);
+}
+
+
+/* =====================================
+input-area
+===================================== */
+
+.input-area {
+  font-size: 24px;
+  background-color: #444;
+  padding: 16px;
+}
+
+.input-area-setting,
+.input-area-logo,
+.input-area-title {
+  margin-top: 8px;
+}
+
+
+/* table style */
+.input-area-table {
+  background-color: #333;
+}
+
+.input-area-table th,
+.input-area-table td {
+  padding: 4px;
+}
+
+.input-area-table__attack label {
+  display: block;
+  cursor: pointer;
+  background-color: #777;
+  width: 40px;
+  text-align: center;
+}
+
+.input-area-table input[type*="checkbox"] {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+
+.input-area-table input[type*="number"] {
+  width: 3em;
+}
+
+
+/* ã‚¿ã‚¤ãƒˆãƒ«ã‚¨ãƒªã‚¢ ãƒ» ãƒ­ã‚´ */
+.input-area-logo__label,
+.input-area-title__label {
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+}
+
+.input-area-logo__label span,
+.input-area-title__label span {
+  font-weight: bold;
+  margin-right: 4px;
+}
+
+
+/* ã‚«ãƒ©ãƒ¼ */
+.input-area-custom {
+  margin-top: 8px;
+}
+
+.input-area-custom__label {
+  font-weight: bold;
+}
+
+.input-area-custom input[type*="number"] {
+  width: 5em;
+}
+
+
+/* mode */
+.input-area-mode label {
+  display: inline-block;
+  background-color: #333;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 8px 12px;
+}
+
+
+/* point */
+.input-area-table__point-select label {
+  display: inline-block;
+  cursor: pointer;
+  background-color: #555;
+  font-weight: bold;
+  padding: 8px 12px;
+}

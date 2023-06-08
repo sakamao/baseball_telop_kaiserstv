@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>野球得点表</title>
+    <link rel="stylesheet" href="reset1.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="image_box">
+    <img class="table" width="500px" src="../image/表(完成前1).png" alt="得点表"> 
+    <!-- 画像のBSO -->
+    <img class="ball1 hidden" width="500px" src="../image/ボール.png">
+    <img class="ball2 hidden" width="500px" src="../image/ボール.png">
+    <img class="ball3 hidden" width="500px" src="../image/ボール.png">
+    <img class="strike1 hidden" width="500px" src="../image/ストライク.png">
+    <img class="strike2 hidden" width="500px" src="../image/ストライク.png">
+    <img class="out1 hidden" width="500px" src="../image/アウト.png">
+    <img class="out2 hidden" width="500px" src="../image/アウト.png">
+    <img class="base1 hidden" width="500px" src="../image/1ベース.png">
+    <img class="base2 hidden" width="500px" src="../image/2ベース.png">
+    <img class="base3 hidden" width="500px" src="../image/3ベース.png">
+    <img class="top_attack" width="500px" src="../image/表攻撃.png">
+    <img class="bottom_attack hidden" width="500px" src="../image/裏攻撃.png">
+    <span class="inning inning_digit digit"></span>
+    <span class="top_char digit">表</span>
+    <span class="bottom_char digit hidden">ウラ</span>
+    <span class="top_score top_score_position"></span>
+    <span class="bottom_score bottom_score_position"></span>
+    <span class="top_team char"></span>
+    <span class="bottom_team char"></span>
+  </div>
+
+  <!-- 表1を作成する -->
+  <table class="design12">
+    <tr>
+     <th>攻</th>
+     <th>チーム名(3文字)</th>
+     <th>点数</th>
+     </tr>
+    <tr>
+     <td><input type="radio" name="top_or_bottom" id="top_radio" checked onchange="top_bottom_which()"></td>
+     <td><input type="text" name="team_name" placeholder="表チーム" id="top_team_table" class="team_width" oninput="inputChange()"></td>
+     <td><input type="number" value="0" min="0" id="top_score_table" class="score_width" oninput="inputChange();digit_check()"></td>
+    </tr>
+    <tr>
+     <td><input type="radio" name="top_or_bottom" id="bottom_radio" onchange="top_bottom_which()"></td>
+     <td><input type="text" name="team_name" placeholder="裏チーム" id="bottom_team_table" class="team_width" oninput="inputChange()"></td>
+     <td><input type="number" value="0" min="0" id="bottom_score_table" class="score_width" oninput="inputChange();digit_check()"></td>
+    </tr>
+   </table>
+
+   <!-- 回数、累状況の表を作成する -->
+
+   <table class="design12 table2">
+    <tr>
+     <th>回数</th>
+     <th>１塁</th>
+     <th>２塁</th>
+     <th>３塁</th>
+     <th class="reset_design2">reset</th>
+     </tr>
+    <tr>
+     <td><input type="number" name="inning" value="1" min="1" id="inning_table" oninput="inputChange();digit_check()"></td>
+     <td><input type="checkbox" name="base" id="base_1" onchange="base1_switch()"></td>
+     <td><input type="checkbox" name="base" id="base_2" onchange="base2_switch()"></td>
+     <td><input type="checkbox" name="base" id="base_3" onchange="base3_switch()"></td>
+     <td><input type="submit" name="reset_base" id="reset_base" value="　　　　" class="button"></td>
+    </tr>
+   </table>
+
+
+
+  <!-- BSOの表を作成 -->
+  <table class="bso_table design02">
+    <tr>
+     <th class="bso_th right_border" colspan="4">BSO</th>
+     <th class="reset_design">reset</th>
+    </tr>
+    <tr>
+     <td class="green" >B</td>
+     <td><input type="checkbox" name="ball" id="ball1_table" onchange="ball1_switch()"></td>
+     <td><input type="checkbox" name="ball" id="ball2_table" onchange="ball2_switch()"></td>
+     <td class="right_border"><input type="checkbox" name="ball" id="ball3_table" onchange="ball3_switch()"></td>
+     <td><input type="submit" name="reset_ball" id="reset_ball" value="　　　　" class="button"></td>
+    </tr>
+    <tr>
+    <td class="yellow">S</td>
+     <td><input type="checkbox" name="strike" id="strike1_table" onchange="strike1_switch()"></td>
+     <td><input type="checkbox" name="strike" id="strike2_table" onchange="strike2_switch()"></td>
+     <td class="right_border"></td>
+     <td><input type="submit" name="reset_strike" id="reset_strike" value="　　　　" class="button"></td>
+    </tr>
+    <tr>
+    <td class="red">O</td>
+     <td><input type="checkbox" name="out" id="out1_table" onchange="out1_switch()"></td>
+     <td><input type="checkbox" name="out" id="out2_table" onchange="out2_switch()"></td>
+     <td class="right_border"></td>
+     <td><input type="submit" name="reset_out" id="reset_out" value="　　　　" class="button"></td>
+    </tr>
+   </table>
+
+  <script src="jquery-3.6.0.min.js"></script>
+  <script>
+    'use strict';
+    //ページ読み込み時に初期値を設定する
+    window.onload = function() {
+      document.querySelector('.top_score').textContent = 0;
+      document.querySelector('.bottom_score').textContent = 0;
+      document.querySelector('.inning').textContent = 1;
+    }
+
+    //input要素が書き換えられた後に画像に反映する
+    function inputChange() {
+    const top_team_name = document.getElementById('top_team_table');
+    document.querySelector('.top_team').textContent = top_team_name.value;
+    
+    const bottom_team_name = document.getElementById('bottom_team_table');
+    document.querySelector('.bottom_team').textContent = bottom_team_name.value;
+
+    const top_score = document.getElementById('top_score_table');
+    document.querySelector('.top_score').textContent = top_score.value;
+
+    const bottom_score = document.getElementById('bottom_score_table');
+    document.querySelector('.bottom_score').textContent = bottom_score.value;
+
+    const inning_number = document.getElementById('inning_table');
+    document.querySelector('.inning').textContent = inning_number.value;
+    }
+
+    //数字が10を超えた時に文字サイズを調節する
+    function digit_check() {
+      const inning = document.querySelector("#inning_table").value;
+      const inning_image = document.querySelector(".inning");
+      const top_score = document.querySelector("#top_score_table").value;
+      const top_score_image = document.querySelector(".top_score");
+      const bottom_score = document.querySelector("#bottom_score_table").value;
+      const bottom_score_image = document.querySelector(".bottom_score");
+      if (inning >9) {
+          inning_image.classList.remove('inning_digit');
+          inning_image.classList.add('digit10');
+      } else {
+        inning_image.classList.remove('digit10');
+        inning_image.classList.add('inning_digit');
+      }
+      if (top_score >9) {
+          top_score_image.classList.remove('top_score_position');
+          top_score_image.classList.add('top_score10');
+      } else {
+        top_score_image.classList.remove('top_score10');
+        top_score_image.classList.add('top_score_position');
+      }
+      if (bottom_score >9) {
+          bottom_score_image.classList.remove('bottom_score_position');
+          bottom_score_image.classList.add('bottom_score10');
+      } else {
+        bottom_score_image.classList.remove('bottom_score10');
+        bottom_score_image.classList.add('bottom_score_position');
+
+    }
+  }
+
+    //表裏のラジオボタンが押された時の処理
+    function top_bottom_which() {
+          var obj1 = document.querySelector(".top_attack");
+          var obj2 = document.querySelector(".bottom_attack");
+          var obj3 = document.querySelector(".top_char");
+          var obj4 = document.querySelector(".bottom_char");
+          obj1.classList.toggle('hidden');
+          obj2.classList.toggle('hidden');
+          obj3.classList.toggle('hidden');
+          obj4.classList.toggle('hidden');
+
+          reset_ball_function();
+          reset_strike_function();
+          reset_out_function();
+          reset_base_function();
+      }
+    
+  //ベースを埋めるボタンの処理
+function base1_switch() {
+  var obj = document.querySelector('.base1');
+    obj.classList.toggle('hidden');
+}
+function base2_switch() {
+  var obj = document.querySelector('.base2');
+    obj.classList.toggle('hidden');
+}
+function base3_switch() {
+  var obj = document.querySelector('.base3');
+    obj.classList.toggle('hidden');
+}
+
+//BSOを動かす処理
+function ball1_switch() {
+  var obj = document.querySelector('.ball1');
+    obj.classList.toggle('hidden');
+}
+function ball2_switch() {
+  var obj = document.querySelector('.ball2');
+    obj.classList.toggle('hidden');
+}
+function ball3_switch() {
+  var obj = document.querySelector('.ball3');
+    obj.classList.toggle('hidden');
+}
+function strike1_switch() {
+  var obj = document.querySelector('.strike1');
+    obj.classList.toggle('hidden');
+}
+function strike2_switch() {
+  var obj = document.querySelector('.strike2');
+    obj.classList.toggle('hidden');
+}
+function out1_switch() {
+  var obj = document.querySelector('.out1');
+    obj.classList.toggle('hidden');
+}
+function out2_switch() {
+  var obj = document.querySelector('.out2');
+    obj.classList.toggle('hidden');
+}
+window.addEventListener('DOMContentLoaded',function(){
+  const ball = document.getElementsByName('ball');
+  const strike = document.getElementsByName('strike');
+  const outing = document.getElementsByName('out');
+  const base = document.getElementsByName('base');
+  const out1 = document.getElementById('out1_table')
+  const out2 = document.getElementById('out2_table')
+  const reset_ball = document.getElementById('reset_ball')
+  const reset_strike = document.getElementById('reset_strike')
+  const reset_out = document.getElementById('reset_out')
+  const reset_base = document.getElementById('reset_base')
+  out1.addEventListener('click', removeFunc,false);
+  out2.addEventListener('click', removeFunc,false);
+  reset_ball.addEventListener('click', reset_ball_function,false);
+  reset_strike.addEventListener('click', reset_strike_function,false);
+  reset_out.addEventListener('click', reset_out_function,false);
+  reset_base.addEventListener('click', reset_base_function,false);
+  
+  function removeFunc(){
+    for(let i = 0; i < ball.length; i++){
+      if (i < 2) {ball[i].checked = false; // ①
+      strike[i].checked = false; //②
+      } else {
+        ball[i].checked = false;
+      }
+      reset_b();
+      reset_s();
+    }
+  }
+  function reset_ball_function() {
+    for(let i = 0; i < ball.length; i++){
+      ball[i].checked = false; // ①
+      reset_b();
+    }
+}
+function reset_strike_function() {
+    for(let i = 0; i < strike.length; i++){
+      strike[i].checked = false; // ①
+      reset_s();
+    }
+}
+function reset_out_function() {
+    for(let i = 0; i < outing.length; i++){
+      outing[i].checked = false; // ①
+      reset_o();
+    }
+}
+function reset_base_function() {
+    for(let i = 0; i < base.length; i++){
+      base[i].checked = false; // ①
+
+      const obj1 = document.querySelector(".base1");
+      obj1.classList.add('hidden');
+      const obj2 = document.querySelector(".base2");
+      obj2.classList.add('hidden');
+      const obj3 = document.querySelector(".base3");
+      obj3.classList.add('hidden');
+    }
+}
+});
+  
+
+function reset_b() {
+  const obj1 = document.querySelector(".ball1");
+  obj1.classList.add('hidden');
+  const obj2 = document.querySelector(".ball2");
+  obj2.classList.add('hidden');
+  const obj3 = document.querySelector(".ball3");
+  obj3.classList.add('hidden');
+}
+function reset_s() {
+  const obj4 = document.querySelector(".strike1");
+  obj4.classList.add('hidden');
+  const obj5 = document.querySelector(".strike2");
+  obj5.classList.add('hidden');
+}
+function reset_o() {
+  const obj6 = document.querySelector(".out1");
+  obj6.classList.add('hidden');
+  const obj7 = document.querySelector(".out2");
+  obj7.classList.add('hidden');
+}
+
+//関数定義（あまりプログラミングと関係なし）
+const ball = document.getElementsByName('ball');
+  const strike = document.getElementsByName('strike');
+  const outing = document.getElementsByName('out');
+  const base = document.getElementsByName('base');
+  const out1 = document.getElementById('out1_table')
+  const out2 = document.getElementById('out2_table')
+  const reset_ball = document.getElementById('reset_ball')
+  const reset_strike = document.getElementById('reset_strike')
+  const reset_out = document.getElementById('reset_out')
+  const reset_base = document.getElementById('reset_base')
+  out1.addEventListener('click', removeFunc,false);
+  out2.addEventListener('click', removeFunc,false);
+  reset_ball.addEventListener('click', reset_ball_function,false);
+  reset_strike.addEventListener('click', reset_strike_function,false);
+  reset_out.addEventListener('click', reset_out_function,false);
+  reset_base.addEventListener('click', reset_base_function,false);
+function removeFunc(){
+    for(let i = 0; i < ball.length; i++){
+      if (i < 2) {ball[i].checked = false; // ①
+      strike[i].checked = false; //②
+      } else {
+        ball[i].checked = false;
+      }
+      reset_b();
+      reset_s();
+    }
+  }
+  function reset_ball_function() {
+    for(let i = 0; i < ball.length; i++){
+      ball[i].checked = false; // ①
+      reset_b();
+    }
+}
+function reset_strike_function() {
+    for(let i = 0; i < strike.length; i++){
+      strike[i].checked = false; // ①
+      reset_s();
+    }
+}
+function reset_out_function() {
+    for(let i = 0; i < outing.length; i++){
+      outing[i].checked = false; // ①
+      reset_o();
+    }
+}
+function reset_base_function() {
+    for(let i = 0; i < base.length; i++){
+      base[i].checked = false; // ①
+
+      const obj1 = document.querySelector(".base1");
+      obj1.classList.add('hidden');
+      const obj2 = document.querySelector(".base2");
+      obj2.classList.add('hidden');
+      const obj3 = document.querySelector(".base3");
+      obj3.classList.add('hidden');
+    }
+}
+  </script>
+</body>
+</html>

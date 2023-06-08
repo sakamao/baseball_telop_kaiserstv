@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow" />
+  <title>テロップ - UNIVAS</title>
+  <link rel="stylesheet" type="text/css" href="./reset.css">
+  <link rel="stylesheet" type="text/css" href="./style.css">
+  <!-- Google font Icon -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+</head>
+<body>
+
+  <div id="app" v-cloak>
+    <section class="display-area" :class="`mode-${mode}`" :style="`width: ${displayAreaWidth}px;`">
+      <div class="display-area__container">
+        <div class="display-area__heading" v-if="isShowTitle" :style="`font-size: ${titleFontSize}px;`">
+          <div class="display-area__main-title">{{ mainTitle }}</div>
+          <div class="display-area__sub-title">{{ subTitle }}</div>
+        </div>
+
+        <div class="display-area__body">
+          <div class="display-area__left" v-if="isShowLogo">
+            <figure class="display-area__logo">
+              <img src="../image/univas_logo.png" alt="">
+            </figure>
+          </div>
+
+          <div class="display-area__main">
+            <div class="display-area__head">
+              <div class="item is-set">セット</div>
+              <div class="item is-game" v-if="mode === 'teniss'">ゲーム</div>
+              <div class="item is-score" v-if="mode === 'volley'">ポイント</div>
+              <div class="item is-point" v-if="mode === 'teniss'">ポイント</div>
+            </div>
+            
+            <div class="display-area__team --A" :style="`background: linear-gradient(to bottom, ${teamBgColorA} 0%,rgba(3,6,13,1) 100%);`">
+              <div class="team" :style="`color: ${teamFontColorA}`">{{ teamA }}</div>
+              <div class="attack" :class="{ 'is-active' : attackPointA }"><span></span></div>
+              <div class="set is-set">{{ setA }}</div>
+              <div class="game is-game" v-if="mode === 'teniss'">{{ gameA }}</div>
+              <div class="score is-score" v-if="mode === 'volley'">{{ volleyScoreA }}</div>
+              <div class="point is-point" v-if="mode === 'teniss'">{{ tenissPointA }}</div>
+            </div>
+
+            <div class="display-area__team --B" :style="`background: linear-gradient(to bottom, ${teamBgColorB} 0%,rgba(3,6,13,1) 100%);`">
+              <div class="team" :style="`color: ${teamFontColorB}`">{{ teamB }}</div>
+              <div class="attack" :class="{ 'is-active' : attackPointB }"><span></span></div>
+              <div class="set is-set">{{ setB }}</div>
+              <div class="game is-game" v-if="mode === 'teniss'">{{ gameB }}</div>
+              <div class="score is-score" v-if="mode === 'volley'">{{ volleyScoreB }}</div>
+              <div class="point is-point" v-if="mode === 'teniss'">{{ tenissPointB }}</div>
+            </div>
+          </div>
+
+          <div class="display-area__right" v-if="isCharacter">
+            <figure class="display-area__logo">
+              <img src="../image/volley_character.png" alt="">
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="input-area" :class="`mode-${mode}`">
+      <!-- モード -->
+      <div class="input-area-mode">
+        <label for="mode-volley">
+          <span class="material-icons">sports_volleyball</span>
+          バレーボール
+          <input type="radio" v-model="mode" id="mode-volley" name="mode" value="volley">
+        </label>
+        <label for="mode-teniss">
+          <span class="material-icons">sports_tennis</span>
+          テニス
+          <input type="radio" v-model="mode" id="mode-teniss" name="mode" value="teniss">
+        </label>
+      </div>
+
+      <!-- ゲーム設定 -->
+      <div class="input-area-setting">
+        <table class="input-area-table" border="1">
+          <thead>
+            <tr>
+              <th>チーム名</th>
+              <th>攻</th>
+              <th>セット</th>
+              <th>ゲーム</th>
+              <th>
+                <span class="material-icons">sports_volleyball</span>
+                ポイント
+              </th> 
+              <th>
+                <span class="material-icons">sports_tennis</span>
+                ポイント
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="input-area-table__team">
+                <input type="text" v-model="teamA" placeholder="チームA">
+              </td>
+              <td class="input-area-table__attack">
+                <label><input type="checkbox" v-model="attackPointA" ref="attackPointA" @change="onAttackPointA($event)"></label>
+              </td>
+              <td class="input-area-table__set">
+                <input type="number" v-model="setA" min="0">
+              </td>
+              <td class="input-area-table__game">
+                <input type="number" v-model="gameA" min="0" v-if="mode === 'teniss'">
+              </td>
+              <td class="input-area-table__score">
+                <div class="input-area-table__point-select" v-if="mode === 'volley'">
+                  <label>
+                    <span>0</span>
+                    <input type="radio" v-model="volleyScoreA" name="volleyScoreA" value="0">
+                  </label>
+                  <label>
+                    <input type="number" v-model="volleyScoreA" min="0">
+                  </label>
+                </div>
+              </td>
+              <td class="input-area-table__point">
+                <div class="input-area-table__point-select" v-if="mode === 'teniss'">
+                  <label>
+                    <span>0</span>
+                    <input type="radio" v-model="tenissPointA" name="tenissPointA" value="0">
+                  </label>
+                  <label>
+                    <span>15</span>
+                    <input type="radio" v-model="tenissPointA" name="tenissPointA" value="15">
+                  </label>
+                  <label>
+                    <span>30</span>
+                    <input type="radio" v-model="tenissPointA" name="tenissPointA" value="30">
+                  </label>
+                  <label>
+                    <span>40</span>
+                    <input type="radio" v-model="tenissPointA" name="tenissPointA" value="40">
+                  </label>
+                  <label>
+                    <span>AD</span>
+                    <input type="radio" v-model="tenissPointA" name="tenissPointA" value="AD">
+                  </label>
+                  <label>
+                    <span>空</span>
+                    <input type="radio" v-model="tenissPointA" name="tenissPointA" value="">
+                  </label>
+                  <label>
+                    <input type="number" v-model="tenissPointA" min="0">
+                  </label>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="input-area-table__team"><input type="text" v-model="teamB" placeholder="チームB"></td>
+              <td class="input-area-table__attack">
+                <label><input type="checkbox" v-model="attackPointB" ref="attackPointB" @change="onAttackPointB($event)"></label>
+              </td>
+              <td class="input-area-table__set"><input type="number" v-model="setB" min="0"></td>
+              <td class="input-area-table__game"><input type="number" v-model="gameB" min="0" v-if="mode === 'teniss'"></td>
+              <td class="input-area-table__score">
+                <div class="input-area-table__point-select" v-if="mode === 'volley'">
+                  <label>
+                    <span>0</span>
+                    <input type="radio" v-model="volleyScoreB" name="volleyScoreB" value="0">
+                  </label>
+                  <label>
+                    <input type="number" v-model="volleyScoreB" min="0">
+                  </label>
+                </div>
+              </td>
+              <td class="input-area-table__point">
+                <div class="input-area-table__point-select" v-if="mode === 'teniss'">
+                  <label>
+                    <span>0</span>
+                    <input type="radio" v-model="tenissPointB" name="tenissPointB" value="0">
+                  </label>
+                  <label>
+                    <span>15</span>
+                    <input type="radio" v-model="tenissPointB" name="tenissPointB" value="15">
+                  </label>
+                  <label>
+                    <span>30</span>
+                    <input type="radio" v-model="tenissPointB" name="tenissPointB" value="30">
+                  </label>
+                  <label>
+                    <span>40</span>
+                    <input type="radio" v-model="tenissPointB" name="tenissPointB" value="40">
+                  </label>
+                  <label>
+                    <span>AD</span>
+                    <input type="radio" v-model="tenissPointB" name="tenissPointB" value="AD">
+                  </label>
+                  <label>
+                    <span>空</span>
+                    <input type="radio" v-model="tenissPointB" name="tenissPointB" value="">
+                  </label>
+                  <label>
+                    <input type="number" v-model="tenissPointB" min="0">
+                  </label>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- メイン・サブタイトル -->
+      <div class="input-area-title">
+        <table class="input-area-table" border="1">
+          <tbody>
+            <tr>
+              <td><input type="text" v-model="mainTitle" placeholder="メインタイトル"></td>
+              <td><input type="text" v-model="subTitle" placeholder="サブタイトル"></td>
+              <td>
+                <label class="input-area-title__label">
+                  <span>タイトル表示</span>
+                  <input type="checkbox" v-model="isShowTitle">
+                </label>
+              </td>
+              <td>
+                <label class="input-area-title__label">
+                  <span>フォントサイズ</span>
+                  <input type="number" v-model="titleFontSize" min="10">
+                </label>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ロゴ -->
+      <div class="input-area-logo">
+        <table class="input-area-table" border="1">
+          <tbody>
+            <tr>
+              <td>
+                <label class="input-area-logo__label">
+                  <span>UNIVASロゴ</span>
+                  <input type="checkbox" v-model="isShowLogo">
+                </label>
+              </td>
+              <td>
+                <label class="input-area-logo__label">
+                  <span>キャラクター</span>
+                  <input type="checkbox" v-model="isCharacter">
+                </label>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- カスタム -->
+      <div class="input-area-custom">
+        <table class="input-area-table" border="1">
+          <tbody>
+            <tr>
+              <td>
+                <div class="input-area-custom__label">チームA背景カラー</div>
+                <input type="text" v-model="teamBgColorA" placeholder="#000000">
+              </td>
+              <td>
+                <div class="input-area-custom__label">チームA文字カラー</div>
+                <input type="text" v-model="teamFontColorA" placeholder="#000000">
+              </td>
+              <td>
+                <div class="input-area-custom__label">チームB背景カラー</div>
+                <input type="text" v-model="teamBgColorB" placeholder="#111111">
+              </td>
+              <td>
+                <div class="input-area-custom__label">チームB文字カラー</div>
+                <input type="text" v-model="teamFontColorB" placeholder="#111111">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="input-area-custom__label">表示エリアの幅</div>
+                <input type="number" v-model="displayAreaWidth" placeholder="680">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <script src="../vue.min.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      new Vue({
+        el: '#app',
+
+        data: {
+          mode: 'volley',
+          isShowLogo: true,
+          isCharacter: false,
+          isShowTitle: true,
+          mainTitle: '',
+          subTitle: '',
+          teamA: '',
+          teamB: '',
+          attackPointA: false,
+          attackPointB: false,
+          gameA: 0,
+          gameB: 0,
+          setA: 0,
+          setB: 0,
+          volleyScoreA: 0,
+          volleyScoreB: 0,
+          tenissPointA: 0,
+          tenissPointB: 0,
+          teamBgColorA: '',
+          teamBgColorB: '',
+          teamFontColorA: '',
+          teamFontColorB: '',
+          titleFontSize: 24,
+          displayAreaWidth: 680,
+        },
+
+        mounted() {
+          // -----------------------------------
+          // this.$data.mainTitle = '全日本バレーボール大学男子選手権大会';
+          // this.$data.subTitle = '3位決定戦';
+          // this.$data.teamA = '早稲田大学';
+          // this.$data.teamB = '慶應義塾大学';
+          // -----------------------------------
+        },
+
+        methods: {
+          onAttackPointA: function(e) {
+            var inputElmB = this.$refs.attackPointB;
+
+            if (e.target.checked) {
+              inputElmB.checked = false;
+              this.attackPointB = false;
+            }
+          },
+
+          onAttackPointB: function(e) {
+            var inputElmA = this.$refs.attackPointA;
+
+            if (e.target.checked) {
+              inputElmA.checked = false;
+              this.attackPointA = false;
+            }
+          }
+        }
+      });
+    })();
+  </script>
+  
+</body>
+</html>

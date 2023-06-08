@@ -1,0 +1,290 @@
+@charset "UTF-8";
+body {
+    font-family: 'ヒラギノ角ゴシック';
+    font-size: 30px;
+    font-weight: 400;
+    color: #000;
+}
+
+
+/* 画像のCSS*/
+
+.digit {
+    font-size: 60px;
+    font-family: 'ヒラギノ角ゴシック';
+    font-weight: 800;
+    color: #fff;
+}
+.digit_top10 {
+    font-size: 60px;
+    font-family: 'ヒラギノ角ゴシック';
+    font-weight: 800;
+    color: #fff;
+}
+.inning_digit {
+    font-size: 40px;
+    position: absolute;
+    top: 45px;
+    left: 228px
+}
+.digit10 {
+    font-size: 36px;
+    font-family: 'ヒラギノ角ゴシック';
+    font-weight: 800;
+    color: #fff;
+    position: absolute;
+    top: 49px;
+    left: 204px
+}
+.char {
+    font-size: 57px;
+    font-family: 'ヒラギノ角ゴシック';
+    font-weight: 800;
+    color: #000;
+}
+.top_team {
+    position: absolute;
+    top: 127px;
+    left: 46px;
+}
+.bottom_team {
+    position: absolute;
+    top: 210px;
+    left: 46px;
+}
+.image-box {
+    position: relative;
+ }
+.top_char, .bottom_char {
+    font-size: 28px;
+    font-weight: 700;
+    position: absolute;
+    top: 56px;
+    left: 263px
+}
+.top_score_position {
+    font-size: 55px;
+    font-family: 'ヒラギノ角ゴシック';
+    font-weight: 800;
+    color: #fff;
+    position: absolute;
+    top: 128px;
+    left: 244px;
+}
+.top_score10 {
+    font-size: 45px;
+    font-family: 'ヒラギノ角ゴシック';
+    font-weight: 800;
+    color: #fff;
+    position: absolute;
+    top: 134px;
+    left: 228px;
+}
+.bottom_score_position {
+    font-size: 55px;
+    font-family: 'ヒラギノ角ゴシック';
+    font-weight: 800;
+    color: #fff;
+    position: absolute;
+    top: 210px;
+    left: 244px;
+}
+.bottom_score10 {
+    font-size: 45px;
+    font-family: 'ヒラギノ角ゴシック';
+    font-weight: 800;
+    color: #fff;
+    position: absolute;
+    top: 217px;
+    left: 228px;
+}
+.ball1, .top_attack, .bottom_attack, .base1, .base2, .base3 {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.ball2 {
+    position: absolute;
+    top: 0;
+    left: 36px;
+}
+.ball3 {
+    position: absolute;
+    top: 0;
+    left: 72px;
+}
+.strike1 {
+    position: absolute;
+    top: 56px;
+    left: 0px;
+}
+.strike2 {
+    position: absolute;
+    top: 56px;
+    left: 36px;
+}
+.out1 {
+    position: absolute;
+    top: 110px;
+    left: 0px;
+}
+.out2 {
+    position: absolute;
+    top: 110px;
+    left: 36px;
+}
+
+
+/* table(表)のCSS */
+
+.design12 {
+    position: relative;
+    top: 60px;
+    left: 50px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    background: #cdf4f0;
+}
+.design12 tr:nth-child(2n+1) {
+    background: #e9faf9;
+}
+.design12 th {
+    padding: 10px;
+    border: solid 1px #ffffff;
+    background: #0f263f;
+    color: #ffffff;
+}
+.design12 td {
+    padding: 10px;
+    border: solid 1px #ffffff;
+}
+.table2 {
+    position: relative;
+    top: -370px;
+    left: 800px;
+}
+.table2 td {
+    padding: -5px;
+}
+.team_width {
+    width: 300px;
+}
+.score_width {
+    width: 100px;
+}
+#inning_table {
+    width: 110px;
+}
+input[type="radio"] {
+    -webkit-transform: scale(2);
+    transform: scale(2);
+    margin-right: 0.5em;
+    position: relative;
+    top: -5px;
+    left: 8px;
+}
+input[type="checkbox"] {
+    -webkit-transform: scale(3);
+    transform: scale(3);
+    margin-right: 0.5em;
+    position: relative;
+    top: -5px;
+    left: 8px;
+}
+#base_1, #base_2, #base_3 {
+    -webkit-transform: scale(3);
+    transform: scale(3);
+    margin-right: 0.5em;
+    position: relative;
+    left: 22px;
+}
+.bso_th {
+    text-align: center;
+    background-color: #0f263f;
+    color: #000;
+    height: 40px;
+    width: 380px;
+    
+}
+
+.bso_table td {
+    text-align: center;
+    height: 60px;
+    width: 50px;
+}
+.green {
+    color: rgb(22, 214, 67);
+    font-weight: 700;
+    font-size: 35px;
+    background-color: #0f263f;
+}
+.yellow {
+    color: rgb(255, 251, 0);
+    font-weight: 700;
+    font-size: 35px;
+    background-color: #0f263f;
+}
+.red {
+    color: red;
+    font-weight: 700;
+    font-size: 35px;
+    background-color: #0f263f;
+}
+.design02 {
+    width: 500px;
+    text-align: center;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: solid 3px #778ca3;
+    position: relative;
+    top: -290px;
+    left: 800px;
+   }
+.design02 tr {
+    border-top: dashed 1px #778ca3;
+   }
+   .design02 th {
+    padding: 10px;
+    background: #cdf4f0;
+   }
+   .design02 td {
+    padding: -7px;
+   }
+.right_border {
+    border-right: 3px #778ca3 solid;
+}
+.reset_design {
+    font-size: 30px;
+    font-family: 'ヒラギノ角ゴシック';
+    font-weight: 600;
+    color: rgb(0, 0, 0);
+}
+.reset_design2 {
+    font-size: 25px;
+    font-family: 'ヒラギノ角ゴシック';
+    font-weight: 600;
+    color: rgb(255, 255, 255);
+}
+.button {
+    display       : inline-block;
+    border-radius : 17%;          /* 角丸       */
+    font-size     : 17pt;        /* 文字サイズ */
+    text-align    : center;      /* 文字位置   */
+    cursor        : pointer;     /* カーソル   */
+    padding       : 32px 0px;   /* 余白       */
+    background    : #ff0000;     /* 背景色     */
+    color         : #ffffff;     /* 文字色     */
+    line-height   : 1em;         /* 1行の高さ  */
+    transition    : .3s;         /* なめらか変化 */
+    border        : 2px solid #ff0000;    /* 枠の指定 */
+    -webkit-transform: scale(0.43);
+    transform: scale(0.43);
+  }
+  .button:hover {
+    color         : #ff0000;     /* 背景色     */
+    background    : #ffffff;     /* 文字色     */
+  }
+
+.hidden {
+    display: none;
+}
